@@ -1,4 +1,4 @@
-import _root_.WebCrawler.{Work, RequestWork, WorkFailed, WorkAvailable}
+import WebCrawler.{Work, RequestWork, WorkFailed, WorkAvailable}
 import akka.actor.{Actor, Props, ActorSystem}
 import org.slf4j.LoggerFactory
 

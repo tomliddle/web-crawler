@@ -1,10 +1,11 @@
-import _root_.WebCrawler.{WorkFailed, Work, WorkAvailable, RequestWork}
+import WebCrawler.{WorkFailed, Work, WorkAvailable, RequestWork}
 import akka.actor.Actor
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import org.slf4j.LoggerFactory
 import scala.concurrent.Future
 import scala.util.{Try, Failure, Success}
+import scala.collection.JavaConversions._
 
 /**
   * Fetches the resource from the url given in the work message. Sends a message to the parent with the parsed links
