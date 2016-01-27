@@ -14,7 +14,8 @@ object WebCrawler {
 	def main(args: Array[String]): Unit = {
 		if (args.length != 2) {
 			println("Usage: url <no of worker actors>")
-			println("Usage: http://www.wipro.com 100")
+			println("Usage: http://www.website.com 100")
+			System.exit(1)
 		}
 		val system = ActorSystem("WebCrawler")
 		system.actorOf(Props(new WebCrawler(args(1).toInt, args(0))))
