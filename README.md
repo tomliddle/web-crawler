@@ -20,5 +20,6 @@ The WebCrawler then adds this page to the map of pages, and prints out the resul
 The WebCralwer adds any new links to the queue and sends out a work available message. Workers then respond again with
 	another RequestWork message and the process repeats until all links are followed.
 
-
-
+Further work
+Testing on actor messages.
+Program termination once all links have been processed.

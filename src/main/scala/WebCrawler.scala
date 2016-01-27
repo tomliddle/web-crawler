@@ -21,7 +21,11 @@ object WebCrawler {
 	}
 }
 
-
+/**
+  * Main actor which stores urls that have been processed and the queue of urls to process
+  * @param noOfWorkers no of actors processing urls
+  * @param url the start page to process
+  */
 class WebCrawler(noOfWorkers: Int, url: String) extends Actor {
 
 	private val log = LoggerFactory.getLogger(getClass)
@@ -57,6 +61,7 @@ class WebCrawler(noOfWorkers: Int, url: String) extends Actor {
 			log.debug(s"URL failed to be parsed: $url")
 			active = active - 1
 
+		// A worker has requested work. If we have any available on the queue, send them a url to process.
 		case RequestWork =>
 			queue.dequeueOption match {
 				case Some(queueElem) =>

@@ -60,7 +60,8 @@ class Worker(val url: String) extends Actor with DocumentParser {
 }
 
 /**
-  * Functionality extracted to allow testing.
+  * Functionality to parse a document object and return sets of URLS.
+  * Extracted to allow easy testing.
   */
 trait DocumentParser {
 
