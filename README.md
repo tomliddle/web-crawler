@@ -23,3 +23,11 @@ The WebCralwer adds any new links to the queue and sends out a work available me
 Further work
 Testing on actor messages.
 Program termination once all links have been processed.
+
+
+Build instructions:
+
+1. "sbt assemble" will create WebCrawler.jar (a fat jar)
+2. "java -jar WebCrawler.jar <url> <no of actors>"" will run the webcrawler.
+
+I have tried the no of actors from anywhere between 100 and 1000 and it seems to work fine.
