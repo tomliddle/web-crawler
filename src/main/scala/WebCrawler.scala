@@ -1,3 +1,4 @@
+import _root_.WebCrawler.{Work, RequestWork, WorkFailed, WorkAvailable}
 import akka.actor.{Actor, Props, ActorSystem}
 import org.slf4j.LoggerFactory
 
@@ -5,9 +6,14 @@ import scala.collection.immutable.Queue
 
 
 object WebCrawler {
+	case object RequestWork
+	case object WorkAvailable
+	case class Work(work: String)
+	case class WorkFailed(url: String)
+
 	def main(args: Array[String]): Unit = {
 		val system = ActorSystem("WebCrawler")
-		system.actorOf(Props(new Master(100, "http://www.wipro.com")))
+		system.actorOf(Props(new WebCrawler(100, "http://www.wipro.com")))
 	}
 }
 
