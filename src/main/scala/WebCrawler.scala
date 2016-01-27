@@ -12,8 +12,12 @@ object WebCrawler {
 	case class WorkFailed(url: String)
 
 	def main(args: Array[String]): Unit = {
+		if (args.length != 2) {
+			println("Usage: url <no of worker actors>")
+			println("Usage: http://www.wipro.com 100")
+		}
 		val system = ActorSystem("WebCrawler")
-		system.actorOf(Props(new WebCrawler(100, "http://www.wipro.com")))
+		system.actorOf(Props(new WebCrawler(args(1).toInt, args(0))))
 	}
 }
 
@@ -50,6 +54,7 @@ class WebCrawler(noOfWorkers: Int, url: String) extends Actor {
 
 		// Work failed, count down the tries
 		case WorkFailed(url) =>
+			log.debug(s"URL failed to be parsed: $url")
 			active = active - 1
 
 		case RequestWork =>

@@ -31,7 +31,7 @@ class Worker(val url: String) extends Actor with DocumentParser {
 					case Success(p) =>
 						context.parent ! p
 						context.parent ! RequestWork
-					// A failure notify the master also so we can count down the requests and avoid calling the url twice
+					// A failure notify the master also so we can count down the requests
 					case Failure(e) =>
 						context.parent ! WorkFailed(url)
 				}
