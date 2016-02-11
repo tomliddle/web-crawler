@@ -17,16 +17,15 @@ class DocumentParserTest extends WordSpec with Matchers with BeforeAndAfterEach{
 	  					<img src="/newimage2.jpg" />
 	  					<img src="/newimage3.jpg" />
 		""".stripMargin)
-	val worker = new DocumentParser {
-		val url = """http://ktoso.github.io"""
-	}
+	val worker = new DocumentParser {}
+	val url = """http://ktoso.github.io"""
 
 	"MainClass" when {
 
 		"getting external URLS" should {
 
 			"get the 2 external urls" in {
-				val urlSet = worker.getExternalURLs(doc)
+				val urlSet = worker.getExternalURLs(doc, url)
 
 				urlSet.size shouldBe(2)
 				urlSet.contains("http://externalurl.com/scala-types-of-types/#phantom-type") shouldBe(true)
@@ -37,7 +36,7 @@ class DocumentParserTest extends WordSpec with Matchers with BeforeAndAfterEach{
 		"getting internal URLS" should {
 
 			"get the 2 internal urls" in {
-				val urlSet = worker.getInternalURLs(doc)
+				val urlSet = worker.getInternalURLs(doc, url)
 
 				urlSet.size shouldBe(2)
 				urlSet.contains("http://ktoso.github.io/scala-types-of-types/#phantom-type") shouldBe(true)
@@ -48,7 +47,7 @@ class DocumentParserTest extends WordSpec with Matchers with BeforeAndAfterEach{
 		"getting static content" should {
 
 			"get the 3 images" in {
-				val urlSet = worker.getStaticContentURLs(doc)
+				val urlSet = worker.getStaticContentURLs(doc, url)
 
 				urlSet.size shouldBe(3)
 				urlSet.contains("/newimage.jpg") shouldBe(true)

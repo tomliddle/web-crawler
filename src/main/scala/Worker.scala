@@ -10,9 +10,8 @@ import scala.collection.JavaConversions._
 /**
   * Fetches the resource from the url given in the work message. Sends a message to the parent with the parsed links
   *
-  * @param url
   */
-class Worker(val url: String) extends Actor with DocumentParser {
+class Worker extends Actor with DocumentParser {
 	implicit val ec = context.dispatcher
 	private val log = LoggerFactory.getLogger(getClass)
 
@@ -49,9 +48,9 @@ class Worker(val url: String) extends Actor with DocumentParser {
 			Try {
 				val doc = Jsoup.connect(url).get()
 
-				val internal = getInternalURLs(doc)
-				val external = getExternalURLs(doc)
-				val images = getStaticContentURLs(doc)
+				val internal = getInternalURLs(doc, url)
+				val external = getExternalURLs(doc, url)
+				val images = getStaticContentURLs(doc, url)
 
 				Page(url, internal, images, external)
 			}
@@ -65,17 +64,15 @@ class Worker(val url: String) extends Actor with DocumentParser {
   */
 trait DocumentParser {
 
-	val url: String
-
-	def getInternalURLs(doc: Document): Set[String] = {
+	def getInternalURLs(doc: Document, url: String): Set[String] = {
 		doc.select("a[href]").toSet[Element].map(elem => elem.attr("abs:href")).filter(_.startsWith(url))
 	}
 
-	def getStaticContentURLs(doc: Document): Set[String] = {
+	def getStaticContentURLs(doc: Document, url: String): Set[String] = {
 		doc.select("img").toSet[Element].map(elem => elem.attr("src"))
 	}
 
-	def getExternalURLs(doc: Document): Set[String] = {
+	def getExternalURLs(doc: Document, url: String): Set[String] = {
 		doc.select("a[href]").toSet[Element].map(elem => elem.attr("abs:href")).filterNot(_.startsWith(url))
 	}
 

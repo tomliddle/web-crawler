@@ -30,7 +30,7 @@ object WebCrawler {
 class WebCrawler(noOfWorkers: Int, url: String) extends Actor {
 
 	private val log = LoggerFactory.getLogger(getClass)
-	private val workers  = (1 to noOfWorkers).map(_ => context.actorOf(Props(new Worker(url))))
+	private val workers  = (1 to noOfWorkers).map(_ => context.actorOf(Props[Worker]))
 	private var pages = Map[String, Page]()
 	private var queue = Queue[String](url)
 	private var attemptedUrls = Set[String]()
